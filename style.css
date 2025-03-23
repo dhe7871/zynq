@@ -1,0 +1,189 @@
+:root{
+    --bgc: #ebeced;
+    --hlt: rgb(207, 208, 209);
+    --bordc: grey;
+}
+*{
+    background-color: var(--bgc);
+    color: var(--fontc);
+}
+.arima{
+    font-family: "Arima", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--bordc);
+    padding-left: 2vw;
+    padding-right: 2vw;
+    position: sticky;
+    top: 0;
+}
+.logo_image{
+    height: 10vh;
+}
+.menubtn{
+    padding: 8px;
+}
+.menubtn:hover{
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid black;
+    box-shadow: 2px 2px 5px grey, -2px -2px 5px grey;
+
+}
+
+.menulist{
+    background-color: #ebeced00;
+    visibility: hidden;
+    opacity: 0;
+    position: fixed;
+    top: 15vh;
+    right: 1vw;
+    transition: visibility 0.2s ease-in-out;
+}
+.menusection{
+    /* display: flex; */
+    width: 20vw;
+    background-color: var(--hlt);
+    padding: 1vw;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: 1vw;
+    box-shadow: 5px 5px 10px grey;
+}
+.menurow{
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5vw;
+    margin: 0.5vw;
+    background-color: var(--hlt);
+    border: 1px solid var(--hlt);
+    border-radius: 10px;
+    cursor: pointer;
+
+    transition: all 0.2s ease-in-out;
+}
+.menurow:hover{
+    background-color: var(--bgc);
+    border: 1px solid black;
+}
+.menurow>div{
+    background-color: var(--hlt);
+    transition: all 0.2s ease-in-out;
+}
+.menurow:hover>div{
+    background-color: var(--bgc);
+}
+.menuoptext{
+    width: 70%;
+    text-align: start;
+}
+
+
+.chats{
+    padding-left: 2vw;
+    padding-right: 2vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+.chats{
+    height: 83vh;
+}
+.nochatdiv{
+    display: flex;
+    height: 87%;
+    justify-content: center;
+    align-items: center;
+}
+.nochatdiv p{
+    font-size: 1.5rem;
+    color: grey;
+    text-align: center;
+}
+.nochatdiv span:hover{
+    font-style: italic;
+    color: black;
+    cursor: pointer;
+}
+.person_search{
+    background-color: var(--hlt);
+    padding: 3vh;
+    border: 2px solid black;
+    border-radius: 15px;
+    position: fixed;
+    bottom: 5vh;
+    right: 3vw;
+}
+.person_search:hover{
+    background-color: var(--bgc);
+    cursor: pointer;
+    box-shadow: 5px 5px 10px grey, -5px -5px 10px grey;
+
+    transition: all 0.5s ease-in-out;
+}
+
+
+
+.searchmenudiv{
+    display: flex;
+    align-items: center;
+}
+.searchdiv{
+    margin-left: 1vw;
+    margin-right: 1vw;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out;
+}
+.searchinput{
+    border-radius: 7px;
+    width: 15vw;
+    height: 3vh;
+    font-family: 'Arima', 'sans-serif';
+    font-weight: bold;
+}
+
+@media screen and (max-width: 490px){
+    .arima{
+        font-size: 0.9rem;
+    }
+    .menusection{
+        width: 70vw;
+    }
+    .searchinput{
+        width: 50vw;
+    }
+    .nochatdiv p{
+        font-size: 1.1rem;
+    }
+}
+@media screen and (max-width: 768px) and (min-width: 490px){
+    .arima{
+        font-size: 1rem;
+    }
+    .menusection{
+        width: 40vw;
+    }
+    .searchinput{
+        width: 35vw;
+    }
+    .nochatdiv p{
+        font-size: 1.2rem;
+    }
+}
+@media screen and (max-width: 1024px) and (min-width: 768px){
+    .menusection{
+        width: 30vw;
+    }
+    .searchinput{
+        width: 25vw;
+    }
+    .nochatdiv p{
+        font-size: 1.3rem;
+    }
+}
