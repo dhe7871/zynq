@@ -6,6 +6,7 @@
 *{
     background-color: var(--bgc);
     color: var(--fontc);
+    font-size: 1rem;
 }
 .arima{
     font-family: "Arima", system-ui;
@@ -18,16 +19,17 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid var(--bordc);
-    padding-left: 2vw;
-    padding-right: 2vw;
+    padding-left: 3vw;
+    padding-right: 3vw;
     position: sticky;
     top: 0;
 }
 .logo_image{
-    height: 10vh;
+    height: 8vh;
 }
 .menubtn{
     padding: 8px;
+    border: 1px solid var(--bgc);
 }
 .menubtn:hover{
     border-radius: 5px;
@@ -42,8 +44,8 @@
     visibility: hidden;
     opacity: 0;
     position: fixed;
-    top: 15vh;
-    right: 1vw;
+    top: 12vh;
+    right: 3vw;
     transition: visibility 0.2s ease-in-out;
 }
 .menusection{
@@ -95,8 +97,8 @@
     height: 83vh;
 }
 .nochatdiv{
-    display: flex;
-    height: 87%;
+    display: none; /*flex*/
+    height: 103%;
     justify-content: center;
     align-items: center;
 }
@@ -111,13 +113,16 @@
     cursor: pointer;
 }
 .person_search{
+    /* visibility: hidden; */
+
     background-color: var(--hlt);
     padding: 3vh;
     border: 2px solid black;
     border-radius: 15px;
-    position: fixed;
-    bottom: 5vh;
-    right: 3vw;
+    position: absolute;
+    bottom: 3vh;
+    left: 80vw;
+    right: 5vw;
 }
 .person_search:hover{
     background-color: var(--bgc);
@@ -129,27 +134,170 @@
 
 
 
-.searchmenudiv{
+/* .searchmenudiv{
     display: flex;
     align-items: center;
 }
 .searchdiv{
-    margin-left: 1vw;
-    margin-right: 1vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease-in-out;
 }
 .searchinput{
-    border-radius: 7px;
+    border-radius: 15px;
     width: 15vw;
-    height: 3vh;
+    height: 4vh;
+    font-family: 'Arima', 'sans-serif';
+    font-weight: bold;
+} */
+
+.chatdiv{
+    height: 103%;
+    display: flex;
+    /* border: 2px solid black; */
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    justify-content: space-between;
+}
+
+/*Chat Contacts CSS*/
+.chatcontacts{
+    width: 30%;
+    border: 2px solid black;
+    border-radius: 10px;
+    text-align: center;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.chatcontacts>div{
+    margin-left: 1vh;
+    margin-right: 1vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+.chatcontacts::-webkit-scrollbar{
+    width: 5px;
+}
+.chatcontacts::-webkit-scrollbar-thumb {
+    background: var(--hlt);
+    border-radius: 15px;
+}
+.chatcontacts::-webkit-scrollbar-thumb:hover {
+    background: rgb(197, 198, 198);
+}
+
+/* .searchdiv1{
+    position: sticky;
+    top: 1vh;
+} */
+.searchinput1{
+    border-radius: 20px;
+    width: 85%;
+    height: 4vh;
     font-family: 'Arima', 'sans-serif';
     font-weight: bold;
 }
+.searchinput:focus, .searchinput1:focus, .chatboxdiv input:focus{
+    box-shadow: 5px 5px 10px grey, -5px -5px 10px grey;
+}
+.cc{
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--bgc);
+    height: 10vh;
+    /* width: 90%; */
+}
+.cc:hover{
+    border: 2px solid black;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px grey, -5px -5px 10px grey;
+}
+.cc img{
+    width: 8vh;
+    height: 8vh;
+    border: 1px solid black;
+    border-radius: 8vh;
+    margin-left: 2vh;
+    margin-right: 2vh;
+}
+.cc>div{
+    text-align: start;
+    margin-left: 2vw;
+    width: 15vw;
+}
+.cc>div>div{
+    width: 100%;
+    height: 4vh;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/*chatroom CSS*/
+.chatroom{
+    width: 68%;
+    border: 2px solid black;
+    border-radius: 15px;
+    overflow: auto;
+}
+.chatroom::-webkit-scrollbar{
+    width: 5px;
+}
+.chatroom::-webkit-scrollbar-thumb {
+    background: var(--hlt);
+    border-radius: 15px;
+}
+.chatroom::-webkit-scrollbar-thumb:hover {
+    background: rgb(197, 198, 198);
+}
+
+.chatroomnav{
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid black;
+    height: 10vh;
+    /* width: 90%; */
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+.chatroomnav img{
+    width: 7vh;
+    height: 7vh;
+    border: 1px solid black;
+    border-radius: 7vh;
+    margin-left: 3vh;
+    margin-right: 3vh;
+}
+.chatroomnav>div{
+    text-align: start;
+    margin-left: 2vw;
+}
+.chatboxdiv{
+    /* display: flex;
+    justify-content: center; */
+    margin-left: 1vw;
+    margin-right: 1vw;
+    position: absolute;
+    bottom: 5vh;
+    /* left: 15vw; */
+    left: 36vw;
+}
+.chatboxdiv input{
+    width: 55vw;
+    /* width: 67vw; */
+    height: 5vh;
+    border-radius: 20px;
+    border: 2px solid black;
+    font-family: 'Arima', 'sans-serif';
+    font-size: 1rem;
+}
 
 @media screen and (max-width: 490px){
-    .arima{
+    *{
         font-size: 0.9rem;
     }
     .menusection{
@@ -161,11 +309,24 @@
     .nochatdiv p{
         font-size: 1.1rem;
     }
+    .chatroom{
+        display: none;
+        width: 100%;
+    }
+    .person_search{
+        visibility: visible;
+    }
+    .chatcontacts{
+        width: 100%;
+    }
+    .cc>div{
+        width: 70vw;
+    }
 }
 @media screen and (max-width: 768px) and (min-width: 490px){
-    .arima{
+    /* .arima{
         font-size: 1rem;
-    }
+    } */
     .menusection{
         width: 40vw;
     }
@@ -174,6 +335,19 @@
     }
     .nochatdiv p{
         font-size: 1.2rem;
+    }
+    .chatroom{
+        display: none;
+        width: 100%;
+    }
+    .person_search{
+        visibility: visible;
+    }
+    .chatcontacts{
+        width: 100%;
+    }
+    .cc>div{
+        width: 72vw;
     }
 }
 @media screen and (max-width: 1024px) and (min-width: 768px){
