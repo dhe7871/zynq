@@ -1,0 +1,60 @@
+.nav {
+    /* padding: 1rem; */
+    padding: 3rem 0 3rem 0;
+    background-color: var(--bg-dark);
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    box-shadow: 5px 5px 10px var(--border-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    row-gap: 3rem;
+    
+}
+
+
+
+.iconsDiv{
+    width: 100%;
+}
+.iconDiv{
+    width: 100%;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.iconDiv.active::after{
+    content: "";
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 3px;
+    background-color: var(--primary);
+    box-shadow: -10px 0 20px var(--primary);
+}
+.iconDiv > svg path{
+    /* fill: blue; */
+    /* stroke-width: 0.5px; */
+    fill: var(--text-muted);
+    stroke: var(--text-muted);
+}
+.iconDiv>svg:hover path{
+    fill: var(--text);
+    stroke: var(--text);
+}
+
+.profileImage{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 30px;
+    border: 1px solid var(--border);
+    object-fit: fill;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease-in-out;
+}
+.profileImage:hover, .profileImage.profile{
+    box-shadow: 5px 5px 10px var(--border-muted), -5px -5px 10px var(--border-muted);
+}

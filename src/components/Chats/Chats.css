@@ -1,0 +1,68 @@
+.chats {
+    position: relative;
+    display: grid;
+    grid-template-rows: 7vh 30vh 42vh;
+    row-gap: 1rem;
+}
+
+.chats-child:not(.search-people) {
+    /* padding: 0rem 1rem 1rem 1rem; */
+    background-color: var(--bg-light);
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    box-shadow: 5px 5px 10px var(--border-muted);
+    overflow-y: auto;
+}
+
+.search-people {
+    position: relative;
+}
+
+.search {
+    width: 100%;
+    height: 100%;
+    padding-inline-start: 3rem;
+    padding-inline-end: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color: var(--bg-light);
+    color: var(--text-muted);
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    box-shadow: 5px 5px 10px var(--border-muted);
+}
+
+.search:focus {
+    outline: none;
+}
+
+.search-icon {
+    position: absolute;
+    top: calc(50% - 0.7rem);
+    left: 1rem;
+    cursor: default;
+}
+
+.search-icon path {
+    fill: var(--text-muted);
+    stroke: var(--text-muted);
+}
+
+.search-icon:hover path {
+    fill: var(--text);
+    stroke: var(--text);
+}
+
+
+.groups>div:first-child,
+.peoples>div:first-child {
+    position: sticky;
+    top: 0;
+    padding: 0.5rem 1rem 0 1rem;
+    /* color: red; */
+    background-color: var(--bg-light);
+}
+.groups>div:last-child,
+.peoples>div:last-child {
+    padding: 0rem 1rem 0.5rem 1rem;
+}

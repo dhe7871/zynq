@@ -1,0 +1,40 @@
+.chatCard{
+    /* background-color: var(--primary); */
+    margin: 0.5rem 0 0.5rem 0;
+    padding: 0.1rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+.chatCard:hover{
+    background-color: var(--bg);
+}
+
+.profileImage{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    margin: 0.5rem;
+}
+
+.chatCardData{
+    padding-inline: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.numUnreadMess{
+    display: flex;
+    justify-content: end;
+    /* padding: 0.2rem; */
+}
+.numUnreadMess>h5{
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 1.2rem;
+    background-color: var(--secondary);
+    text-align: center;
+}
