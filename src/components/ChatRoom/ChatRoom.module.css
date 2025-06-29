@@ -1,9 +1,13 @@
 .chatRoom {
+    width: 100%;
+    height: 100%;
     background-color: var(--bg-light);
     border: 1px solid var(--border);
     border-radius: 1rem;
     box-shadow: 5px 5px 10px var(--border-muted);
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .chatRoom nav {
@@ -15,15 +19,14 @@
 
 .chatRoom nav>div:first-child {
     display: flex;
-    /* justify-content: left; */
     align-items: center;
 }
 
 .profileImage {
     width: 3.5rem;
     height: 3.5rem;
-    border-radius: 2rem;
     margin: 0.2rem 2rem 0.2rem 1rem;
+    border-radius: 2rem;
 }
 
 .menuBtn {
@@ -36,15 +39,32 @@
     stroke: var(--text)
 }
 
+
+
+
 .chatRoomBody {
-    /* width: 100%;
-    height: 87%; */
+    width: 100%;
+    height: 100%;
     padding: 0.5rem 1rem 1rem 1rem;
-    /* display: flex;
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center; */
+    gap: 1rem;
 }
+
+
+/*
+-------------------------------------------------
+--------------CSS for Chat Messages--------------
+-------------------------------------------------
+*/
+.chatBox{
+    width: 100%;
+    height: 100%;
+}
+
+
+
 
 
 /*
@@ -53,10 +73,10 @@
 -------------------------------------------------
 */
 .chatInputBox {
-    width: calc(100% - 6.5rem);
-    position: absolute;
-    bottom: 1rem;
-    /* right: 5.5rem; */
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    position: relative;
 }
 
 .chatInput {
@@ -90,17 +110,17 @@
 
 .emojiBtn {
     top: 1rem;
-    right: 6rem;
+    right: 10.5rem;
 }
 
 .cameraBtn {
     top: 1rem;
-    right: 3.5rem;
+    right: 8rem;
 }
 
 .microphoneBtn {
     top: 1rem;
-    right: 1rem;
+    right: 5.5rem;
 }
 
 .sendMessageBtn {
@@ -112,17 +132,14 @@
 }
 
 .chatInputBox>div {
-    top: 0;
-    right: -4.5rem;
     padding: 1rem;
     background-color: var(--bg-dark);
     border: 1px solid var(--border);
     border-radius: 1rem;
     cursor: pointer;
     box-shadow: 5px 5px 10px var(--border-muted);
-    position: absolute;
 }
 
 .chatInputBox>div:hover {
     background-color: var(--bg-light);
-}
+} 
