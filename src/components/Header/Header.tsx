@@ -31,7 +31,7 @@ export default function Header() {
             type: "SET_IS_DARK_THEME",
             payload: { isDark: darkBrowserTheme },
         });
-    }, []);
+    }, [dispatch]);
 
     const toggleTheme = () => {
         const htmlDocument = document.documentElement;
