@@ -3,7 +3,7 @@ header {
     margin: 1rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    padding-inline: 3vw;
+    padding-inline: 3rem;
     border-radius: 1rem;
     border: 1px solid var(--border);
     box-shadow: 5px 5px 10px var(--border-muted);
@@ -13,26 +13,43 @@ header {
 }
 
 .img {
-    margin-inline: 1rem; 
+    margin-inline: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .img {
+        margin-inline: 0;
+        width: auto;
+        height: 5vh;
+    }
+
+    header {
+        padding-inline: 3vw;
+    }
 }
 
 
-.sun-btn{
+.sun-btn {
     stroke-width: 0.5px;
     transition: transform 0.2s ease-in-out;
 }
-.moon-btn{
+
+.moon-btn {
     stroke-width: 0.5px;
 }
+
 .sun-btn:hover {
     transform: rotateZ(20deg);
 }
-.sun-btn path, .moon-btn path{
+
+.sun-btn path,
+.moon-btn path {
     fill: var(--text-muted);
     stroke: var(--text-muted);
 }
-.sun-btn:hover path, .moon-btn:hover path{
+
+.sun-btn:hover path,
+.moon-btn:hover path {
     fill: var(--text);
     stroke: var(--text);
 }
-

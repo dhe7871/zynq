@@ -1,12 +1,22 @@
 "use client";
-import { useRef } from "react";
-// import { CiSearch } from "react-icons/ci";
+import { useEffect, useRef } from "react";
+import Link from "next/link";
 import "./Chats.css";
 import SearchOutlined from "@/icons/SearchOutlined";
 import ChatCard from "../ChatCard/ChatCard";
+import { useAppContext } from "@/lib/context";
 
 export default function Chats() {
     const inputRef = useRef<HTMLInputElement>(null);
+    const context = useAppContext();
+
+    if (!context) throw new Error("ContextValue can not be null...");
+    const [state, dispatch] = context;
+    // useEffect(() => {
+    //     dispatch({ type: "CHANGE_CHATROOM_VISIBILITY_SM" });
+    //     console.log("comes here")
+    // }, []);
+
     return (
         <div className="chats">
             <div className="search-people chats-child">
@@ -35,7 +45,11 @@ export default function Chats() {
                         return (
                             <div key={idx}>
                                 {idx ? <hr /> : ""}
-                                <ChatCard lastMessageBy="Dheeraj" />
+                                <ChatCard
+                                    roomId={String(idx)}
+                                    lastMessageBy="Dheeraj"
+                                    lastMessage="Hallelujah!"
+                                />
                             </div>
                         );
                     })}
@@ -50,7 +64,11 @@ export default function Chats() {
                         return (
                             <div key={idx}>
                                 {idx ? <hr /> : ""}
-                                <ChatCard lastMessageBy="" />
+                                <ChatCard
+                                    roomId={String(idx)}
+                                    lastMessageBy=""
+                                    lastMessage="Hallelujah!"
+                                />
                             </div>
                         );
                     })}

@@ -4,6 +4,7 @@
 ::-webkit-scrollbar {
   width: 0;
 }
+
 ::-webkit-scrollbar-thumb {
   background: transparent;
 }
@@ -12,6 +13,8 @@ html[data-theme="light"] {
   --bg-dark: hsl(195 21% 89%);
   --bg: hsl(195 40% 94%);
   --bg-light: hsl(195 100% 100%);
+  --bg-msg-in: rgb(217, 225, 225);
+  --bg-msg-out: hsl(178, 46%, 56%);
   --text: hsl(196 72% 4%);
   --text-muted: hsl(195 14% 27%);
   --highlight: hsl(195 100% 99%);
@@ -24,10 +27,13 @@ html[data-theme="light"] {
   --success: hsl(147 19% 36%);
   --info: hsl(217 22% 41%);
 }
-html[data-theme="dark"]{
+
+html[data-theme="dark"] {
   --bg-dark: oklch(0.1 0.01 220);
   --bg: oklch(0.15 0.01 220);
   --bg-light: oklch(0.2 0.01 220);
+  --bg-msg-in: oklch(0.4 0.02 220);
+  --bg-msg-out: hsl(183 63% 55%);
   --text: oklch(0.96 0.02 220);
   --text-muted: oklch(0.76 0.02 220);
   --highlight: oklch(0.5 0.02 220);
@@ -41,16 +47,24 @@ html[data-theme="dark"]{
   --info: oklch(0.7 0.05 260);
 }
 
-
-body {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: var(--bg-dark);
-  color: var(--text);
 }
 
-.btn{
+/* html {
+  overflow-y: hidden;
+} */
+
+body {
+  background: var(--bg-dark);
+  color: var(--text);
+  overflow-y: hidden;
+  /* position: fixed; */
+}
+
+.btn {
   padding: 0.5rem;
   background-color: var(--primary);
   color: white;
@@ -58,18 +72,41 @@ body {
   border-radius: 0.5rem;
   cursor: pointer;
 }
-.btn:hover{
+
+.btn:hover {
   background-color: var(--secondary);
 }
 
+.small-scr {
+  height: 83vh;
+  margin: 1rem;
+  overflow-y: hidden;
 
-.big-scr{
+  display: none;
+}
+
+.big-scr {
   height: 83vh;
   display: grid;
   grid-template-columns: minmax(4rem, 0.8fr) 5fr 9.2fr;
   margin: 1rem;
   column-gap: 1rem;
 }
+
+@media screen and (max-width: 768px) {
+  .small-scr{
+    display: block;
+  }
+  .big-scr {
+    display: none;
+  }
+}
+
+/* @media screen and (min-width: 768px) {
+  .small-scr {
+    display: none;
+  }
+} */
 
 svg:hover {
   cursor: pointer;
@@ -81,24 +118,30 @@ svg:hover {
 ----------General CSS-----------
 --------------------------------
 */
-h1{
+h1 {
   font-size: 1.8rem;
 }
-h2{
+
+h2 {
   font-size: 1.5rem;
 }
-h3{
+
+h3 {
   font-size: 1.3rem;
 }
-h4{
+
+h4 {
   font-size: 1rem;
 }
-h5{
+
+h5 {
   font-size: 0.9rem;
 }
-h6{
+
+h6 {
   font-size: 0.8rem;
 }
-hr{
+
+hr {
   color: var(--border-muted);
 }

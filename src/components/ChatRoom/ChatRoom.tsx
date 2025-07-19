@@ -1,15 +1,74 @@
+"use client";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { socket } from "@/lib/socket";
 import styles from "./ChatRoom.module.css";
+
 import MenuHamOutlined from "@/icons/MenuHamOutlined";
 import AttachmentOutlined from "@/icons/AttachmentOutlined";
 import EmojiOutlined from "@/icons/EmojiOutlined";
 import CameraOutlined from "@/icons/CameraOutlined";
 import SendMessageOutlined from "@/icons/SendMessageOutlined";
 import MicrophoneOutlined from "@/icons/MicrophoneOutlined";
+import Message from "./Message/Message";
+import useMobKeyboardStatus from "@/customHooks/useMobKeyboardStatus";
+import { useAppContext } from "@/lib/context";
+
+type MSG = {
+    isOutgoing: boolean;
+    msg: string;
+};
+const isHideBubble = (messages: MSG[], idx: number) => {
+    console.log(messages);
+    if (idx === messages.length - 1) return false;
+    if (messages[idx].isOutgoing === messages[idx + 1].isOutgoing) return true;
+    return false;
+};
 
 export default function ChatRoom() {
+    const bottomRef = useRef<HTMLDivElement | null>(null);
+    const keyboardOpen = useMobKeyboardStatus();
+    const [messages, setMessages] = useState<MSG[]>([]);
+    const [msg, setMsg] = useState("");
+
+    const context = useAppContext();
+    if (!context) throw new Error("Context can not be null...");
+    const [state, dispatch] = context;
+
+    useEffect(() => {
+        socket.on("connect", () => {
+            console.log("connected to the websocket server...");
+        });
+
+        socket.on("receive-message", (data) => {
+            setMessages((messages) => [...messages, data]);
+        });
+    }, []);
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+        // window.scrollTo({top: 0})
+    }, [messages]);
+
+
+    const handleSubmit = () => {
+        setMsg("");
+        const data = {
+            isOutgoing: true,
+            msg,
+        };
+        setMessages([...messages, data]);
+        socket.emit("send-message", data);
+    };
+
     return (
-        <div className={styles.chatRoom}>
+        <div
+            className={`${styles.chatRoom} ${
+                keyboardOpen && state.isSmallScr && state.isChatRoomVisibleSM
+                    ? styles.keyboardOpen
+                    : ""
+            }`}
+        >
             <nav>
                 <div>
                     <div>
@@ -23,7 +82,7 @@ export default function ChatRoom() {
                     </div>
 
                     <div>
-                        <h2 className="font-bold">Dheeraj</h2>
+                        <h3 className="font-bold">Dheeraj</h3>
                         <h5 style={{ color: "var(--text-muted)" }}>
                             Online - Last Seen, 2:02pm
                         </h5>
@@ -39,36 +98,138 @@ export default function ChatRoom() {
                 </div>
             </nav>
 
-            <hr style={{ marginInline: "1rem" }} />
+            <hr className={styles.hr} />
 
-            <div className={styles.chatRoomBody}>
-                <div className={styles.chatBox}>Chats</div>
-                <div className={styles.chatInputBox}>
-                    <input
-                        type="text"
-                        placeholder="Type your message here..."
-                        id="chatInput"
-                        name="chatInput"
-                        className={styles.chatInput}
-                    />
-                    <AttachmentOutlined
-                        className={`${styles.SVGBtn} ${styles.attachmentBtn}`}
-                    />
-                    <EmojiOutlined
-                        className={`${styles.SVGBtn} ${styles.emojiBtn}`}
-                    />
-                    <CameraOutlined
-                        className={`${styles.SVGBtn} ${styles.cameraBtn}`}
-                    />
-                    <MicrophoneOutlined
-                        className={`${styles.SVGBtn} ${styles.microphoneBtn}`}
-                    />
-                    <div>
-                        <SendMessageOutlined
-                            className={`${styles.SVGBtn} ${styles.sendMessageBtn}`}
+            <div className={styles.chatBox}>
+                {messages.map((data, idx, array) => {
+                    return (
+                        <Message
+                            key={idx}
+                            isPrivateMsg={true}
+                            {...data}
+                            hideBubble={isHideBubble(array, idx)}
+                            senderImage={null}
                         />
-                    </div>
-                </div>
+                    );
+                })}
+
+                {/* <Message
+                    isPrivateMsg={true}
+                    isOutgoing={false}
+                    hideBubble={true}
+                    msg="kjsdfksfhk jhfkjhfkjhfksjhfdk jshfksjfhksjf hskjfskHello what are you doing, I am fine what are you doing skibdi..."
+                    senderImage={"/profile_photo_1.jpg"}
+                />
+                <Message
+                    isPrivateMsg={true}
+                    isOutgoing={false}
+                    hideImg={true}
+                    msg="Hello what are you doing, I am fine what are you doing skibdi..."
+                    senderImage={"/profile_photo_1.jpg"}
+                />
+                <Message
+                    isPrivateMsg={true}
+                    isOutgoing={true}
+                    hideBubble={true}
+                    msg="hello hello"
+                    senderImage={null}
+                />
+                <Message
+                    isPrivateMsg={true}
+                    isOutgoing={true}
+                    msg="How are you?"
+                    senderImage={null}
+                />
+                <Message
+                    isPrivateMsg={true}
+                    isOutgoing={false}
+                    hideImg={true}
+                    msg="Hello what are you doing, I am fine what are you doing skibdi..."
+                    senderImage={"/profile_photo_1.jpg"}
+                />
+                <Message
+                    isPrivateMsg={true}
+                    isOutgoing={true}
+                    hideBubble={true}
+                    msg="hello hello"
+                    senderImage={null}
+                />
+                <Message
+                    isPrivateMsg={true}
+                    isOutgoing={true}
+                    msg="How are you?"
+                    senderImage={null}
+                /> */}
+                {/* <Message
+                    isPrivateMsg={true}
+                    isOutgoing={false}
+                    hideBubble={true}
+                    msg="kjsdfksfhk jhfkjhfkjhfksjhfdk jshfksjfhksjf hskjfskHello what are you doing, I am fine what are you doing skibdi..."
+                    senderImage={"/profile_photo_1.jpg"}
+                />
+                <Message
+                    isPrivateMsg={true}
+                    isOutgoing={false}
+                    hideImg={true}
+                    msg="Hello what are you doing, I am fine what are you doing skibdi..."
+                    senderImage={"/profile_photo_1.jpg"}
+                />
+                <Message
+                    isPrivateMsg={true}
+                    isOutgoing={true}
+                    hideBubble={true}
+                    msg="hello hello"
+                    senderImage={null}
+                /> */}
+                <div ref={bottomRef} />
+            </div>
+            <div className={styles.chatInputBox}>
+                <input
+                    type="text"
+                    placeholder="Type your message here..."
+                    id="chatInput"
+                    name="chatInput"
+                    className={styles.chatInput}
+                    value={msg}
+                    onChange={(e) => {
+                        console.log(e.target.value);
+                        setMsg(e.target.value);
+                    }}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") handleSubmit();
+                    }}
+                />
+                <button
+                    type="button"
+                    className={`${styles.attachmentBtn} ${styles.SVGBtn}`}
+                >
+                    <AttachmentOutlined className={styles.SVG} />
+                </button>
+                <button
+                    type="button"
+                    className={`${styles.emojiBtn} ${styles.SVGBtn}`}
+                >
+                    <EmojiOutlined className={styles.SVG} />
+                </button>
+                <button
+                    type="button"
+                    className={`${styles.cameraBtn} ${styles.SVGBtn}`}
+                >
+                    <CameraOutlined className={styles.SVG} />
+                </button>
+                <button
+                    type="button"
+                    className={`${styles.microphoneBtn} ${styles.SVGBtn}`}
+                >
+                    <MicrophoneOutlined className={styles.SVG} />
+                </button>
+                <button
+                    type="button"
+                    className={`${styles.sendMessageBtn} ${styles.SVGBtn}`}
+                    onClick={handleSubmit}
+                >
+                    <SendMessageOutlined className={styles.SVG} />
+                </button>
             </div>
         </div>
     );

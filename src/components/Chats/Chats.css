@@ -5,6 +5,12 @@
     row-gap: 1rem;
 }
 
+@media screen and (max-width: 768px) {
+    .chats {
+        grid-template-rows: 6vh 29vh 40vh;
+    }
+}
+
 .chats-child:not(.search-people) {
     /* padding: 0rem 1rem 1rem 1rem; */
     background-color: var(--bg-light);
@@ -62,6 +68,7 @@
     /* color: red; */
     background-color: var(--bg-light);
 }
+
 .groups>div:last-child,
 .peoples>div:last-child {
     padding: 0rem 1rem 0.5rem 1rem;
