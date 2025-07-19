@@ -53,15 +53,10 @@ html[data-theme="dark"] {
   box-sizing: border-box;
 }
 
-/* html {
-  overflow-y: hidden;
-} */
-
 body {
   background: var(--bg-dark);
   color: var(--text);
   overflow-y: hidden;
-  /* position: fixed; */
 }
 
 .btn {
@@ -78,12 +73,13 @@ body {
 }
 
 .small-scr {
-  height: 83vh;
+  height: 79vh;
   margin: 1rem;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 
   display: none;
 }
+
 
 .big-scr {
   height: 83vh;
@@ -101,12 +97,6 @@ body {
     display: none;
   }
 }
-
-/* @media screen and (min-width: 768px) {
-  .small-scr {
-    display: none;
-  }
-} */
 
 svg:hover {
   cursor: pointer;

@@ -4,22 +4,29 @@ export {};
 
 declare global {
     type State = {
-        isChatRoomVisibleSM: boolean;
-        isSmallScr: boolean;
         isDarkTheme: boolean;
+        isChatRoomVisibleSM: boolean;
+        chatRoomId: string | null;
     };
 
     type Action =
         | {
-              type: "CHANGE_CHATROOM_VISIBILITY_SM";
-          }
-        | {
-              type: "SET_IS_SMALL_SCR";
-              payload: boolean;
-          }
-        | {
               type: "SET_IS_DARK_THEME";
-              payload: boolean;
+              payload: {
+                  isDark: boolean;
+              };
+          }
+        | {
+              type: "SET_CHATROOM_VISIBILITY_SM";
+              payload: {
+                isVisibleSM: boolean;
+              }
+          }
+        | {
+              type: "SET_CHATROOM_ID";
+              payload: {
+                  roomId: string | null;
+              };
           };
 
     type ContextValue = [state: State, dispatch: React.Dispatch<Action>];
@@ -28,9 +35,9 @@ declare global {
         error: {
             msg: string;
             code: number | null;
-        },
+        };
         success: boolean;
-    }
+    };
 
     interface CustomJwtSessionClaims {
         metadata: {

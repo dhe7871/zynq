@@ -1,20 +1,22 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import "./Header.css";
 import SunOutlined from "@/icons/SunOutlined";
 import MoonOutlined from "@/icons/MoonOutlined";
 import ArrowLeftOutlined from "@/icons/ArrowLeftOutlined";
 import { useAppContext } from "@/lib/context";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
-    const router = useRouter();
+    const isSmallScr = useIsMobile();
     const context = useAppContext();
 
     if (!context) throw new Error("context can not be null");
     const [state, dispatch] = context;
+
+    const router = useRouter();
 
     useEffect(() => {
         const htmlDocument = document.documentElement;
@@ -25,7 +27,10 @@ export default function Header() {
             "data-theme",
             darkBrowserTheme ? "dark" : "light"
         );
-        dispatch({ type: "SET_IS_DARK_THEME", payload: darkBrowserTheme });
+        dispatch({
+            type: "SET_IS_DARK_THEME",
+            payload: { isDark: darkBrowserTheme },
+        });
     }, []);
 
     const toggleTheme = () => {
@@ -38,26 +43,33 @@ export default function Header() {
             "data-theme",
             state.isDarkTheme ? "light" : "dark"
         );
-        dispatch({ type: "SET_IS_DARK_THEME", payload: !state.isDarkTheme });
+        dispatch({
+            type: "SET_IS_DARK_THEME",
+            payload: { isDark: !state.isDarkTheme },
+        });
     };
 
     const handleBackNav = () => {
-        if (state.isChatRoomVisibleSM) {
-            dispatch({ type: "CHANGE_CHATROOM_VISIBILITY_SM" });
+        if (isSmallScr && state.isChatRoomVisibleSM) {
+            dispatch({
+                type: "SET_CHATROOM_VISIBILITY_SM",
+                payload: { isVisibleSM: false },
+            });
             console.log("backing");
-            window.location.href = "/home";
-
-            // router.push("/home");
+            router.push("/home");
         }
     };
 
     const handleHomeNav = () => {
-        if (state.isSmallScr && state.isChatRoomVisibleSM) {
-            dispatch({ type: "CHANGE_CHATROOM_VISIBILITY_SM" });
+        if (state.isChatRoomVisibleSM) {
+            dispatch({
+                type: "SET_CHATROOM_VISIBILITY_SM",
+                payload: { isVisibleSM: false },
+            });
         }
         console.log("backing");
         window.location.href = "/home";
-        // router.push("/home");
+        // router.push("/home/chat")
     };
 
     return (
@@ -70,9 +82,7 @@ export default function Header() {
                     stroke="var(--text-muted)"
                     strokeWidth={0.5}
                     className={`${
-                        state.isChatRoomVisibleSM && state.isSmallScr
-                            ? ""
-                            : "hidden"
+                        state.isChatRoomVisibleSM && isSmallScr ? "" : "hidden"
                     } hover:fill-[var(--text)] hover:stroke-[var(--text)] hover:scale-105`}
                     onClick={handleBackNav}
                 />
@@ -99,8 +109,6 @@ export default function Header() {
                     height={30}
                     className="sun-btn"
                     style={{
-                        // position: "absolute",
-                        // opacity: state.isDarkTheme ? "1" : "0",
                         display: state.isDarkTheme ? "block" : "none",
                     }}
                 />
@@ -109,9 +117,6 @@ export default function Header() {
                     height={30}
                     className="moon-btn"
                     style={{
-                        // position: "absolute",
-                        // top: "0",
-                        // opacity: state.isDarkTheme ? "0" : "1",
                         display: state.isDarkTheme ? "none" : "block",
                     }}
                 />

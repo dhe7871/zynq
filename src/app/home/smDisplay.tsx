@@ -9,16 +9,12 @@ export default function SMDisplay({
     chatroom: React.ReactNode;
 }) {
     const context = useAppContext();
-    if(!context) throw new Error("Context can not be null...");
-    const [state, dispatch] = context;
-    console.log(state.isChatRoomVisibleSM)
+    if (!context) return null;
+    const [state] = context;
+
     return (
-        <>
-            {state.isChatRoomVisibleSM ? (
-                <div className="small-scr">{chatroom}</div>
-            ) : (
-                <div className="small-scr">{chats}</div>
-            )}
-        </>
+        <div className="small-scr">
+            {state.isChatRoomVisibleSM ? chatroom : chats}
+        </div>
     );
 }

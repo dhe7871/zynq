@@ -1,5 +1,5 @@
 "use client";
-import { useRedux } from "@/customHooks/useRedux";
+import { useRedux } from "@/hooks/useRedux";
 import { AppContext } from "@/lib/context";
 
 export default function ContextWrapper({
@@ -7,10 +7,6 @@ export default function ContextWrapper({
 }: {
     children: React.ReactNode;
 }) {
-  const [state, dispatch] = useRedux();
-    return (
-      <AppContext value={[state, dispatch]} >
-        {children}
-      </AppContext>
-    )
+    const [state, dispatch] = useRedux();
+    return <AppContext value={[state, dispatch]}>{children}</AppContext>;
 }

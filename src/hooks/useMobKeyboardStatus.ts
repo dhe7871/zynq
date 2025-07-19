@@ -8,7 +8,6 @@ export default function useMobKeyboardStatus() {
             if (window.visualViewport) {
                 const heightDiff =
                     window.innerHeight - window.visualViewport.height;
-                console.log(heightDiff);
                 setKeyboardOpen(heightDiff > 150);
             }
         };
@@ -16,6 +15,5 @@ export default function useMobKeyboardStatus() {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    console.log("keyboardOpen:", keyboardOpen);
     return keyboardOpen;
 }

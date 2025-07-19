@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import styles from "./ChatCard.module.css";
 import { useAppContext } from "@/lib/context";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function ChatCard({
     roomId,
@@ -13,6 +14,7 @@ export default function ChatCard({
     lastMessageBy: string;
     lastMessage: string;
 }) {
+    const isSmallScr = useIsMobile();
     const router = useRouter();
     const context = useAppContext();
 
@@ -21,22 +23,34 @@ export default function ChatCard({
 
     return (
         <div
-            className={`${styles.chatCard}`}
+            className={`${styles.chatCard} ${
+                roomId === state.chatRoomId ? "bg-[var(--bg)]" : ""
+            } hover:bg-[var(--bg)] transition-colors duration-200 ease-in-out`}
             onClick={() => {
-                console.log("isSmallScr: ", state.isSmallScr);
+                console.log("isSmallScr: ", isSmallScr);
 
-                if (state.isSmallScr) {
-                    console.log("changing chatRoom visibility");
-                    dispatch({
-                        type: "CHANGE_CHATROOM_VISIBILITY_SM",
-                    });
-                }
+                console.log("changing chatRoom visibility");
+                dispatch({
+                    type: "SET_CHATROOM_VISIBILITY_SM",
+                    payload: {
+                        isVisibleSM: true,
+                    },
+                });
+
+                // if (isSmallScr) {
+                //     console.log("changing chatRoom visibility");
+                //     dispatch({
+                //         type: "CHANGE_CHATROOM_VISIBILITY_SM",
+                //     });
+                // }
                 router.push(`/home/chat/${roomId}`);
             }}
         >
             <div>
                 <Image
-                    src="/profile_photo_1.jpg"
+                    src={`https://picsum.photos/id/${
+                        Number(roomId) + 60
+                    }/300/300`}
                     alt="profile_pic"
                     width={40}
                     height={40}

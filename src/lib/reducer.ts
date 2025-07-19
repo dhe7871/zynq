@@ -1,24 +1,22 @@
-// export type State = { smDisplayChatRoom: boolean };
-// export type Action = {
-//     type: string;
-// }
 export const defaultState: State = {
-    isChatRoomVisibleSM: false,
-    isSmallScr: false,
     isDarkTheme: true,
+    isChatRoomVisibleSM: false,
+    chatRoomId: null,
 };
 
 export const reducer = (state: State, action: Action): State => {
     switch (action.type) {
-        case "CHANGE_CHATROOM_VISIBILITY_SM":
+        case "SET_IS_DARK_THEME":
+            return { ...state, isDarkTheme: action.payload.isDark };
+
+        case "SET_CHATROOM_VISIBILITY_SM":
             return {
                 ...state,
-                isChatRoomVisibleSM: !state.isChatRoomVisibleSM,
+                isChatRoomVisibleSM: action.payload.isVisibleSM,
             };
-        case "SET_IS_SMALL_SCR":
-            return { ...state, isSmallScr: action.payload };
-        case "SET_IS_DARK_THEME":
-            return {...state, isDarkTheme: action.payload}
+        case "SET_CHATROOM_ID":
+            return { ...state, chatRoomId: action.payload.roomId };
+
         default:
             return state;
     }

@@ -1,3 +1,4 @@
+import MediaQuery from "react-responsive";
 import SMDisplay from "./smDisplay";
 import Link from "next/link";
 
@@ -18,7 +19,6 @@ export default function HomeLayout({
                 {chats}
                 {chatroom}
             </div>
-            {/* <Link href="/login">Login</Link> */}
         </>
     );
 }

@@ -11,8 +11,9 @@ import CameraOutlined from "@/icons/CameraOutlined";
 import SendMessageOutlined from "@/icons/SendMessageOutlined";
 import MicrophoneOutlined from "@/icons/MicrophoneOutlined";
 import Message from "./Message/Message";
-import useMobKeyboardStatus from "@/customHooks/useMobKeyboardStatus";
+import useMobKeyboardStatus from "@/hooks/useMobKeyboardStatus";
 import { useAppContext } from "@/lib/context";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 type MSG = {
     isOutgoing: boolean;
@@ -25,7 +26,8 @@ const isHideBubble = (messages: MSG[], idx: number) => {
     return false;
 };
 
-export default function ChatRoom() {
+export default function ChatRoom({ roomId }: { roomId: string }) {
+    const isSmallScr = useIsMobile();
     const bottomRef = useRef<HTMLDivElement | null>(null);
     const keyboardOpen = useMobKeyboardStatus();
     const [messages, setMessages] = useState<MSG[]>([]);
@@ -46,10 +48,18 @@ export default function ChatRoom() {
     }, []);
 
     useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-        // window.scrollTo({top: 0})
-    }, [messages]);
+        if (!isSmallScr || state.isChatRoomVisibleSM) {
+            dispatch({ type: "SET_CHATROOM_ID", payload: { roomId } });
+        }
 
+        return () => {
+            dispatch({ type: "SET_CHATROOM_ID", payload: { roomId: null } });
+        };
+    }, [isSmallScr, state.isChatRoomVisibleSM, dispatch, roomId]);
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    }, [messages]);
 
     const handleSubmit = () => {
         setMsg("");
@@ -64,7 +74,7 @@ export default function ChatRoom() {
     return (
         <div
             className={`${styles.chatRoom} ${
-                keyboardOpen && state.isSmallScr && state.isChatRoomVisibleSM
+                keyboardOpen && isSmallScr && state.isChatRoomVisibleSM
                     ? styles.keyboardOpen
                     : ""
             }`}
@@ -73,7 +83,9 @@ export default function ChatRoom() {
                 <div>
                     <div>
                         <Image
-                            src="/profile_photo_1.jpg"
+                            src={`https://picsum.photos/id/${
+                                Number(roomId) + 60
+                            }/300/300`}
                             alt="profile_pic"
                             width={40}
                             height={40}
@@ -112,75 +124,7 @@ export default function ChatRoom() {
                         />
                     );
                 })}
-
-                {/* <Message
-                    isPrivateMsg={true}
-                    isOutgoing={false}
-                    hideBubble={true}
-                    msg="kjsdfksfhk jhfkjhfkjhfksjhfdk jshfksjfhksjf hskjfskHello what are you doing, I am fine what are you doing skibdi..."
-                    senderImage={"/profile_photo_1.jpg"}
-                />
-                <Message
-                    isPrivateMsg={true}
-                    isOutgoing={false}
-                    hideImg={true}
-                    msg="Hello what are you doing, I am fine what are you doing skibdi..."
-                    senderImage={"/profile_photo_1.jpg"}
-                />
-                <Message
-                    isPrivateMsg={true}
-                    isOutgoing={true}
-                    hideBubble={true}
-                    msg="hello hello"
-                    senderImage={null}
-                />
-                <Message
-                    isPrivateMsg={true}
-                    isOutgoing={true}
-                    msg="How are you?"
-                    senderImage={null}
-                />
-                <Message
-                    isPrivateMsg={true}
-                    isOutgoing={false}
-                    hideImg={true}
-                    msg="Hello what are you doing, I am fine what are you doing skibdi..."
-                    senderImage={"/profile_photo_1.jpg"}
-                />
-                <Message
-                    isPrivateMsg={true}
-                    isOutgoing={true}
-                    hideBubble={true}
-                    msg="hello hello"
-                    senderImage={null}
-                />
-                <Message
-                    isPrivateMsg={true}
-                    isOutgoing={true}
-                    msg="How are you?"
-                    senderImage={null}
-                /> */}
-                {/* <Message
-                    isPrivateMsg={true}
-                    isOutgoing={false}
-                    hideBubble={true}
-                    msg="kjsdfksfhk jhfkjhfkjhfksjhfdk jshfksjfhksjf hskjfskHello what are you doing, I am fine what are you doing skibdi..."
-                    senderImage={"/profile_photo_1.jpg"}
-                />
-                <Message
-                    isPrivateMsg={true}
-                    isOutgoing={false}
-                    hideImg={true}
-                    msg="Hello what are you doing, I am fine what are you doing skibdi..."
-                    senderImage={"/profile_photo_1.jpg"}
-                />
-                <Message
-                    isPrivateMsg={true}
-                    isOutgoing={true}
-                    hideBubble={true}
-                    msg="hello hello"
-                    senderImage={null}
-                /> */}
+                
                 <div ref={bottomRef} />
             </div>
             <div className={styles.chatInputBox}>

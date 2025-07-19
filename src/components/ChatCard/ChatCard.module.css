@@ -1,5 +1,4 @@
 .chatCard{
-    /* background-color: var(--primary); */
     margin: 0.5rem 0 0.5rem 0;
     padding: 0.5rem;
     border-radius: 1rem;
@@ -7,10 +6,15 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+
+    /* transition: background-color 0.2s ease-in-out; */
 }
-.chatCard:hover{
+/* .chatCard:hover{
     background-color: var(--bg);
-}
+} */
+/* .chatCard[]{
+
+} */
 
 .profileImage{
     width: 3rem;
@@ -29,7 +33,6 @@
 .numUnreadMess{
     display: flex;
     justify-content: end;
-    /* padding: 0.2rem; */
 }
 .numUnreadMess>h5{
     width: 1.4rem;

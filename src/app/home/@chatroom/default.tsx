@@ -1,8 +1,6 @@
 import LockOutlined from "@/icons/lockOutlined";
 
-export const dynamic = "force-dynamic";
-
-export default function ChatRoomPage() {
+export default function ChatRoomDefaultPage() {
     console.log("Rendering @chatroom/default.tsx");
     return (
         <div className="text-[var(--text-muted)] w-full h-full flex flex-col justify-center text-center">

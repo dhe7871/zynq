@@ -7,7 +7,7 @@
 
 @media screen and (max-width: 768px) {
     .chats {
-        grid-template-rows: 6vh 29vh 40vh;
+        grid-template-rows: 6vh 28vh 41.3vh;
     }
 }
 
