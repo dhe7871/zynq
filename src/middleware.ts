@@ -4,11 +4,11 @@ export default async function authenticationMiddleware(request: NextRequest) {
     const token = request.cookies.get("token")?.value;
     const publicPaths = ["/login", "/signup", "/forgot-password"];
 
-    if (publicPaths.includes(request.nextUrl.pathname)) {
-        console.log("public URL")
+    if (publicPaths.some((path) => request.nextUrl.pathname.startsWith(path))) {
+        console.log("public URL");
         return NextResponse.next();
     } else if (request.nextUrl.pathname === "/") {
-        console.log("pathname: ", request.nextUrl.pathname)
+        console.log("pathname: ", request.nextUrl.pathname);
         return NextResponse.redirect(new URL("/home", request.url));
     }
 
@@ -17,7 +17,7 @@ export default async function authenticationMiddleware(request: NextRequest) {
     } else {
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_ZYNQ_API_URL}/api/v1/auth/verify-token`,
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/verify-token`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -25,7 +25,7 @@ export default async function authenticationMiddleware(request: NextRequest) {
                 }
             );
 
-            if(!response.ok){
+            if (!response.ok) {
                 return NextResponse.redirect(new URL("/login", request.url));
             }
 
@@ -48,11 +48,19 @@ export default async function authenticationMiddleware(request: NextRequest) {
     return NextResponse.next();
 }
 
+// export const config = {
+//     matcher: [
+//         // Skip Next.js internals and all static files, unless found in search params
+//         "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+//         // Always run for API routes
+//         "/(api|trpc)(.*)",
+//     ],
+// };
+
 export const config = {
     matcher: [
-        // Skip Next.js internals and all static files, unless found in search params
-        "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-        // Always run for API routes
+        // Match all except static files and specific public files like manifest.json
+        "/((?!_next|favicon.ico|manifest.json|icon.*\\.png|.*\\.(?:css|js|jpg|jpeg|png|svg|webp|woff2?|ttf|eot|otf|json)).*)",
         "/(api|trpc)(.*)",
     ],
 };

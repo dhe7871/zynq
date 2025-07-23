@@ -14,7 +14,7 @@ const initialState: formState = {
     success: false,
 };
 
-export default function ModalLoginPage() {
+export default function ModalForgetPasswordPage() {
     const [state, formAction, isPending] = useActionState(
         submitForgotPasswordForm,
         initialState
@@ -23,7 +23,7 @@ export default function ModalLoginPage() {
     return (
         <div className={styles.modalPage}>
             <div className={styles.modal}>
-                <h2>Forgot Password</h2>
+                <h2>Forgot Your Password?</h2>
                 <Form action={formAction} className={styles.form}>
                     <div style={{ marginTop: "1rem" }}>
                         <label htmlFor="email">E-mail</label>

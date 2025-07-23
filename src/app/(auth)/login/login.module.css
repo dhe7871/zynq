@@ -32,32 +32,6 @@
     outline: none;
 }
 
-.passwordDiv {
-    margin-top: 1rem;
-    position: relative;
-}
-
-.SVG {
-    position: absolute;
-    top: 2rem;
-    right: 1rem;
-    width: 24px;
-    height: 24px;
-    fill: var(--text-muted);
-    stroke: var(--text-muted);
-    stroke-width: 0.5;
-}
-
-.SVG:hover {
-    stroke: var(--text);
-    fill: var(--text);
-}
-
-.passwordVisible {
-    fill: var(--text);
-    stroke: var(--text);
-}
-
 
 .submitBtn {
     width: 100%;

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 
 import styles from "./signup.module.css";
-import PasswordDiv from "../login/PasswordDiv";
+import PasswordDiv from "@/utils/components/PasswordDiv/PasswordDiv";
 import { submitSignupForm } from "@/actions/authActions";
 
 const initialState: formState = {
@@ -65,7 +65,7 @@ export default function ModalLoginPage() {
                             required
                         />
                     </div>
-                    <PasswordDiv />
+                    <PasswordDiv name="password" />
                     <button
                         type="submit"
                         className={styles.submitBtn}

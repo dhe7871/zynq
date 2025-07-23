@@ -19,8 +19,8 @@ declare global {
         | {
               type: "SET_CHATROOM_VISIBILITY_SM";
               payload: {
-                isVisibleSM: boolean;
-              }
+                  isVisibleSM: boolean;
+              };
           }
         | {
               type: "SET_CHATROOM_ID";
@@ -32,11 +32,11 @@ declare global {
     type ContextValue = [state: State, dispatch: React.Dispatch<Action>];
 
     type formState = {
-        error: {
-            msg: string;
-            code: number | null;
-        };
+        msg: string;
+        code: number;
+
         success: boolean;
+        resetPasswordToken?: string;
     };
 
     interface CustomJwtSessionClaims {

@@ -8,6 +8,7 @@ import {
 import "./globals.css";
 import ContextWrapper from "./ContextWrapper";
 import Header from "@/components/Header/Header";
+import ThemeColorManager from "@/utils/ThemeColorManager";
 
 // const raleway = Raleway({
 //     subsets: ["latin"],
@@ -29,9 +30,23 @@ export const metadata: Metadata = {
     title: "Zynq - The messaging App",
     description: "This is the next generation chatting app.",
     icons: {
-        icon: "/logo_dark.png",
+        icon: [
+            { url: "/logo_dark.png", type: "image/png" },
+            { url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
+            { url: "/icon-512x512.png", sizes: "512x512", type: "image/png" },
+        ],
     },
+    manifest: "/manifest.json",
 };
+
+export const viewport = {
+    themeColor: "#000000",
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+};
+
 
 export default function RootLayout({
     children,
@@ -42,6 +57,7 @@ export default function RootLayout({
         <html lang="en" data-theme="dark">
             <body className={mont.className}>
                 <ContextWrapper>
+                    <ThemeColorManager />
                     <Header />
                     {children}
                 </ContextWrapper>

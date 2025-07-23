@@ -1,6 +1,4 @@
-import MediaQuery from "react-responsive";
 import SMDisplay from "./smDisplay";
-import Link from "next/link";
 
 export default function HomeLayout({
     children,
