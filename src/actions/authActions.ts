@@ -25,7 +25,7 @@ export async function submitSignupForm(
             httpOnly: true,
             path: "/",
             secure: process.env.NODE_ENV === "production",
-            sameSite: "lax", // or "strict"/"none"
+            sameSite: "strict", // or "strict"/"none"
             maxAge: 7 * 24 * 60 * 60, // in seconds (7 days)
         });
 
@@ -75,7 +75,7 @@ export const submitLoginForm = async (
             httpOnly: true,
             path: "/",
             secure: process.env.NODE_ENV === "production",
-            sameSite: "lax", // or "strict"/"none"
+            sameSite: "strict", // or "strict"/"none"
             maxAge: 7 * 24 * 60 * 60, // in seconds (7 days)
         });
 

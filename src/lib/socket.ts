@@ -8,6 +8,7 @@ export const getSocket = (): Socket => {
             process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000",
             {
                 transports: ["websocket"],
+                withCredentials: true
             }
         );
     }
