@@ -1,4 +1,5 @@
 import ChatRoom from "@/components/ChatRoom/ChatRoom";
+import ChatContextWrapper from "@/lib/ChatContextWrapper";
 
 export default async function ChatRoomPage({
     params,
@@ -8,5 +9,9 @@ export default async function ChatRoomPage({
     const { roomId } = await params;
     console.log("chatRoomId: ", roomId);
 
-    return <ChatRoom roomId={roomId} />
+    return (
+        <ChatContextWrapper>
+            <ChatRoom roomId={roomId} />
+        </ChatContextWrapper>
+    );
 }

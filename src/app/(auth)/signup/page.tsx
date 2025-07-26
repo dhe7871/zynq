@@ -7,16 +7,15 @@ import { useActionState, useEffect } from "react";
 import styles from "./signup.module.css";
 import PasswordDiv from "@/utils/components/PasswordDiv/PasswordDiv";
 import { submitSignupForm } from "@/actions/authActions";
+import ErrorCard from "@/utils/components/ErrorCard/ErrorCard";
 
 const initialState: formState = {
-    error: {
-        msg: "",
-        code: -1,
-    },
+    msg: "",
+    code: -1,
     success: false,
 };
 
-export default function ModalLoginPage() {
+export default function ModalSignupPage() {
     const [state, formAction, isPending] = useActionState(
         submitSignupForm,
         initialState
@@ -32,6 +31,7 @@ export default function ModalLoginPage() {
 
     return (
         <div className={styles.modalPage}>
+            <ErrorCard state={state} />
             <div className={styles.modal}>
                 <h2>Sign up to Zynq</h2>
                 <Form action={formAction} className={styles.form}>

@@ -1,6 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
-import Link from "next/link";
+import { useRef } from "react";
 import "./Chats.css";
 import SearchOutlined from "@/icons/SearchOutlined";
 import ChatCard from "../ChatCard/ChatCard";
@@ -8,14 +7,40 @@ import { useAppContext } from "@/lib/context";
 
 export default function Chats() {
     const inputRef = useRef<HTMLInputElement>(null);
-    const context = useAppContext();
+    // const [contacts, setContacts] = useState<User[]>([]);
+    const [appState, setAppState] = useAppContext();
 
-    if (!context) throw new Error("ContextValue can not be null...");
-    const [state, dispatch] = context;
     // useEffect(() => {
-    //     dispatch({ type: "CHANGE_CHATROOM_VISIBILITY_SM" });
-    //     console.log("comes here")
-    // }, []);
+    //     if (!appState.user) return;
+
+    //     const socket = getSocket();
+
+    //     const handleContacts = (contacts: User[]) => {
+    //         console.log(contacts);
+            
+
+    //         console.log(appState.user);
+
+    //         for (const contact of contacts) {
+    //             const roomId = [appState.user?._id, contact._id]
+    //                 .sort()
+    //                 .join("-");
+    //             contact.roomId = roomId;
+    //             console.log("roomId: ", roomId)
+    //             socket.emit("JOIN_ROOM", roomId);
+    //         }
+
+    //         setAppState((prev) => {
+    //             return { ...prev, contacts};
+    //         });
+    //     };
+
+    //     socket.on("GET_CONTACTS", handleContacts);
+
+    //     return () => {
+    //         socket.off("GET_CONTACTS", handleContacts);
+    //     };
+    // }, [appState.user, setAppState]);
 
     return (
         <div className="chats">
@@ -47,6 +72,8 @@ export default function Chats() {
                                 {idx ? <hr /> : ""}
                                 <ChatCard
                                     roomId={String(idx)}
+                                    imgUrl="https://picsum.photos/id/1/300/300"
+                                    name="Friends Forever"
                                     lastMessageBy="Dheeraj"
                                     lastMessage="Hallelujah!"
                                 />
@@ -60,12 +87,16 @@ export default function Chats() {
                     <h3 className="font-bold">People</h3>
                 </div>
                 <div>
-                    {Array.from({ length: 10 }).map((_, idx) => {
+                    {appState.contacts.map((contact, idx) => {
                         return (
                             <div key={idx}>
                                 {idx ? <hr /> : ""}
                                 <ChatCard
-                                    roomId={String(idx)}
+                                    roomId={[appState.user?._id, contact._id]
+                                        .sort()
+                                        .join("-")}
+                                    imgUrl={contact.imgUrl}
+                                    name={contact.name}
                                     lastMessageBy=""
                                     lastMessage="Hallelujah!"
                                 />

@@ -6,7 +6,7 @@ import {
     Montserrat,
 } from "next/font/google";
 import "./globals.css";
-import ContextWrapper from "./ContextWrapper";
+import AppContextWrapper from "../lib/AppContextWrapper";
 import Header from "@/components/Header/Header";
 import ThemeColorManager from "@/utils/ThemeColorManager";
 
@@ -47,7 +47,6 @@ export const viewport = {
     userScalable: false,
 };
 
-
 export default function RootLayout({
     children,
 }: {
@@ -56,11 +55,12 @@ export default function RootLayout({
     return (
         <html lang="en" data-theme="dark">
             <body className={mont.className}>
-                <ContextWrapper>
-                    <ThemeColorManager />
-                    <Header />
-                    {children}
-                </ContextWrapper>
+                <AppContextWrapper>
+                    <ThemeColorManager>
+                        <Header />
+                        {children}
+                    </ThemeColorManager>
+                </AppContextWrapper>
             </body>
         </html>
     );

@@ -14,12 +14,13 @@ header {
 
 .img {
     margin-inline: 1rem;
+    width: auto;
+    height: 8vh;
 }
 
 @media screen and (max-width: 768px) {
     .img {
         margin-inline: 0;
-        width: auto;
         height: 5vh;
     }
 

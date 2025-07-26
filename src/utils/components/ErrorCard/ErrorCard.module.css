@@ -2,7 +2,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    max-width: 50%;
+    max-width: 30%;
     padding: 2rem 1rem;
     border-radius: 1rem 0 0 1rem;
     box-shadow: 5px 5px 10px var(--border-muted);
@@ -18,4 +18,10 @@
     transform: translateX(0);
     pointer-events: auto;
     opacity: 1;
+}
+
+@media screen and (max-width: 768px){
+    .errorDiv{
+        max-width: 50%;
+    }
 }

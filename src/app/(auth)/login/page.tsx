@@ -6,12 +6,13 @@ import { useActionState, useEffect } from "react";
 import styles from "./login.module.css";
 import PasswordDiv from "@/utils/components/PasswordDiv/PasswordDiv";
 import { submitLoginForm } from "@/actions/authActions";
+import ErrorCard from "@/utils/components/ErrorCard/ErrorCard";
+import { useAppContext } from "@/lib/context";
 
 const initialState: formState = {
-    error: {
-        msg: "",
-        code: -1,
-    },
+    msg: "",
+    code: -1,
+
     success: false,
 };
 
@@ -22,14 +23,28 @@ export default function ModalLoginPage() {
     );
     const router = useRouter();
 
+    const [_, setAppState] = useAppContext();
+
     useEffect(() => {
         if (state.success) {
+            setAppState((prev) =>{
+                return {...prev, user: state.payload?.user}
+            })
+
+            // dispatch({
+            //     type: "SET_USER",
+            //     payload: { user: state.payload?.user },
+            // });
+
+            console.log(state.payload?.user);
+
             router.push("/home");
         }
-    }, [state.success, router]);
+    }, [state.success, state.payload, router, setAppState]);
 
     return (
         <div className={styles.modalPage}>
+            <ErrorCard state={state} />
             <div className={styles.modal}>
                 <h2>Log in to Zynq</h2>
                 <Form action={formAction} className={styles.form}>

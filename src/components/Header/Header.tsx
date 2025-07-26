@@ -11,10 +11,7 @@ import { useRouter } from "next/navigation";
 
 export default function Header() {
     const isSmallScr = useIsMobile();
-    const context = useAppContext();
-
-    if (!context) throw new Error("context can not be null");
-    const [state, dispatch] = context;
+    const [appState, setAppState] = useAppContext();
 
     const router = useRouter();
 
@@ -27,49 +24,46 @@ export default function Header() {
             "data-theme",
             darkBrowserTheme ? "dark" : "light"
         );
-        dispatch({
-            type: "SET_IS_DARK_THEME",
-            payload: { isDark: darkBrowserTheme },
+
+        setAppState((prev) => {
+            return { ...prev, isDarkTheme: darkBrowserTheme };
         });
-    }, [dispatch]);
+    }, [setAppState]);
 
     const toggleTheme = () => {
         const htmlDocument = document.documentElement;
         htmlDocument.setAttribute(
             "data-theme",
-            state.isDarkTheme ? "dark" : "light"
+            appState.isDarkTheme ? "dark" : "light"
         );
         htmlDocument.setAttribute(
             "data-theme",
-            state.isDarkTheme ? "light" : "dark"
+            appState.isDarkTheme ? "light" : "dark"
         );
-        dispatch({
-            type: "SET_IS_DARK_THEME",
-            payload: { isDark: !state.isDarkTheme },
+
+        setAppState((prev) => {
+            return { ...prev, isDarkTheme: !prev.isDarkTheme };
         });
     };
 
     const handleBackNav = () => {
-        if (isSmallScr && state.isChatRoomVisibleSM) {
-            dispatch({
-                type: "SET_CHATROOM_VISIBILITY_SM",
-                payload: { isVisibleSM: false },
+        if (isSmallScr && appState.isChatRoomVisibleSM) {
+            setAppState((prev) => {
+                return { ...prev, isChatRoomVisibleSM: false };
             });
             console.log("backing");
-            router.push("/home");
+            router.push("/home/chat");
         }
     };
 
     const handleHomeNav = () => {
-        if (state.isChatRoomVisibleSM) {
-            dispatch({
-                type: "SET_CHATROOM_VISIBILITY_SM",
-                payload: { isVisibleSM: false },
+        if (appState.isChatRoomVisibleSM) {
+            setAppState((prev) => {
+                return { ...prev, isChatRoomVisibleSM: false };
             });
         }
         console.log("backing");
-        window.location.href = "/home";
-        // router.push("/home/chat")
+        router.push("/home/chat");
     };
 
     return (
@@ -82,13 +76,17 @@ export default function Header() {
                     stroke="var(--text-muted)"
                     strokeWidth={0.5}
                     className={`${
-                        state.isChatRoomVisibleSM && isSmallScr ? "" : "hidden"
+                        appState.isChatRoomVisibleSM && isSmallScr
+                            ? ""
+                            : "hidden"
                     } hover:fill-[var(--text)] hover:stroke-[var(--text)] hover:scale-105`}
                     onClick={handleBackNav}
                 />
                 <Image
                     src={
-                        state.isDarkTheme ? "/logo_dark.png" : "/logo_light.png"
+                        appState.isDarkTheme
+                            ? "/logo_dark.png"
+                            : "/logo_light.png"
                     }
                     alt="logo"
                     className="img hover:cursor-pointer"
@@ -109,7 +107,7 @@ export default function Header() {
                     height={30}
                     className="sun-btn"
                     style={{
-                        display: state.isDarkTheme ? "block" : "none",
+                        display: appState.isDarkTheme ? "block" : "none",
                     }}
                 />
                 <MoonOutlined
@@ -117,7 +115,7 @@ export default function Header() {
                     height={30}
                     className="moon-btn"
                     style={{
-                        display: state.isDarkTheme ? "none" : "block",
+                        display: appState.isDarkTheme ? "none" : "block",
                     }}
                 />
             </button>

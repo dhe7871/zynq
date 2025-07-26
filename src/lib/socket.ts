@@ -1,3 +1,15 @@
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 
-export const socket = io(process.env.NEXT_PUBLIC_BACKEND_URL);
+let socket: Socket;
+
+export const getSocket = (): Socket => {
+    if (!socket) {
+        socket = io(
+            process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000",
+            {
+                transports: ["websocket"],
+            }
+        );
+    }
+    return socket;
+};

@@ -3,7 +3,11 @@
 import { useEffect } from "react";
 import { useAppContext } from "@/lib/context"; // adjust path as needed
 
-export default function ThemeColorManager() {
+export default function ThemeColorManager({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
     const context = useAppContext(); // assuming state.theme exists
     if (!context) throw new Error("Context can not be null...");
 
@@ -23,5 +27,5 @@ export default function ThemeColorManager() {
         metaTag.setAttribute("content", color);
     }, [state.isDarkTheme]);
 
-    return null;
+    return children;
 }

@@ -4,6 +4,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    /*necessary for ErrorCard*/
+    position: relative;
 }
 
 .modal {
@@ -51,7 +54,8 @@
 .submitBtn:hover {
     box-shadow: 5px 5px 10px var(--border-muted), -5px -5px 10px var(--border-muted);
 }
-.submitBtn:disabled{
+
+.submitBtn:disabled {
     opacity: 0.7;
     box-shadow: none;
 }

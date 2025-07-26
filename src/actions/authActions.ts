@@ -67,7 +67,7 @@ export const submitLoginForm = async (
             { usEmail, password }
         );
 
-        const { token } = response.data;
+        const { token, user } = response.data;
         console.log(response.data);
 
         const cookieStore = await cookies();
@@ -81,6 +81,7 @@ export const submitLoginForm = async (
 
         return {
             ...prevState,
+            payload: {user},
             msg: "Logged in successfully...",
             code: response.status,
             success: true,
@@ -170,7 +171,7 @@ export const submitResetPasswordForm = async (
             ...prevState,
             msg:
                 response.status === 204
-                    ? "Password reset successful..."
+                    ? "Password reset successful, "
                     : "Unexpected Error Occurred while resetting your password...",
             code: response.status,
             success: response.status === 204,

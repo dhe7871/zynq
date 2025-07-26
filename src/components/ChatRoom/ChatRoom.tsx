@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { socket } from "@/lib/socket";
+import { getSocket } from "@/lib/socket";
 import styles from "./ChatRoom.module.css";
 
 import MenuHamOutlined from "@/icons/MenuHamOutlined";
@@ -12,7 +12,7 @@ import SendMessageOutlined from "@/icons/SendMessageOutlined";
 import MicrophoneOutlined from "@/icons/MicrophoneOutlined";
 import Message from "./Message/Message";
 import useMobKeyboardStatus from "@/hooks/useMobKeyboardStatus";
-import { useAppContext } from "@/lib/context";
+import { useAppContext, useChatContext } from "@/lib/context";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 type MSG = {
@@ -33,29 +33,46 @@ export default function ChatRoom({ roomId }: { roomId: string }) {
     const [messages, setMessages] = useState<MSG[]>([]);
     const [msg, setMsg] = useState("");
 
-    const context = useAppContext();
-    if (!context) throw new Error("Context can not be null...");
-    const [state, dispatch] = context;
+    const [appState, setAppState] = useAppContext();
+    const [chatState, setChatState] = useChatContext();
 
     useEffect(() => {
-        socket.on("connect", () => {
-            console.log("connected to the websocket server...");
-        });
+        const socket = getSocket();
+        console.log("happened twice");
+        const handler = (data: { isOutgoing: boolean; msg: string }) => {
+            setMessages((prev) => [...prev, data]);
+        };
 
-        socket.on("receive-message", (data) => {
-            setMessages((messages) => [...messages, data]);
-        });
+        socket.on("RECEIVE_MESSAGE", handler);
+
+        return ()=>{
+            socket.off("RECEIVE_MESSAGE", handler);
+        }
     }, []);
 
     useEffect(() => {
-        if (!isSmallScr || state.isChatRoomVisibleSM) {
-            dispatch({ type: "SET_CHATROOM_ID", payload: { roomId } });
+        if (!isSmallScr || appState.isChatRoomVisibleSM) {
+            const contact = appState.contacts.filter(
+                (cnt) => cnt.roomId === roomId
+            )[0];
+
+            setChatState((prev) => {
+                return { ...prev, roomId, contact };
+            });
         }
 
         return () => {
-            dispatch({ type: "SET_CHATROOM_ID", payload: { roomId: null } });
+            setChatState((prev) => {
+                return { ...prev, roomId: "", contact: null };
+            });
         };
-    }, [isSmallScr, state.isChatRoomVisibleSM, dispatch, roomId]);
+    }, [
+        isSmallScr,
+        appState.isChatRoomVisibleSM,
+        appState.contacts,
+        setChatState,
+        roomId,
+    ]);
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
@@ -68,13 +85,13 @@ export default function ChatRoom({ roomId }: { roomId: string }) {
             msg,
         };
         setMessages([...messages, data]);
-        socket.emit("send-message", data);
+        getSocket().emit("SEND_MESSAGE", { roomId, data });
     };
 
     return (
         <div
             className={`${styles.chatRoom} ${
-                keyboardOpen && isSmallScr && state.isChatRoomVisibleSM
+                keyboardOpen && isSmallScr && appState.isChatRoomVisibleSM
                     ? styles.keyboardOpen
                     : ""
             }`}
@@ -83,9 +100,10 @@ export default function ChatRoom({ roomId }: { roomId: string }) {
                 <div>
                     <div>
                         <Image
-                            src={`https://picsum.photos/id/${
-                                Number(roomId) + 60
-                            }/300/300`}
+                            src={
+                                chatState.contact?.imgUrl ||
+                                "https://picsum.photos/id/1/300/300"
+                            }
                             alt="profile_pic"
                             width={40}
                             height={40}
@@ -94,7 +112,7 @@ export default function ChatRoom({ roomId }: { roomId: string }) {
                     </div>
 
                     <div>
-                        <h3 className="font-bold">Dheeraj</h3>
+                        <h3 className="font-bold">{chatState.contact?.name}</h3>
                         <h5 style={{ color: "var(--text-muted)" }}>
                             Online - Last Seen, 2:02pm
                         </h5>
@@ -124,7 +142,7 @@ export default function ChatRoom({ roomId }: { roomId: string }) {
                         />
                     );
                 })}
-                
+
                 <div ref={bottomRef} />
             </div>
             <div className={styles.chatInputBox}>

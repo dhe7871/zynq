@@ -34,6 +34,11 @@ export default async function authenticationMiddleware(request: NextRequest) {
             if (!data.success) {
                 return NextResponse.redirect(new URL("/login", request.url));
             }
+
+            const res = NextResponse.next();
+            res.headers.set("x-user-id", data.userId);
+
+            return res;
         } catch (error) {
             console.error("Error Verifying Token: ", error);
             return NextResponse.redirect(new URL("/login", request.url));
@@ -45,6 +50,8 @@ export default async function authenticationMiddleware(request: NextRequest) {
     // }
     // if (pathname !== "/sign-in" && pathname !== "/sign-up")
     // return NextResponse.redirect(new URL("/sign-in", request.url));
+    
+    
     return NextResponse.next();
 }
 

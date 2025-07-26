@@ -5,12 +5,11 @@ import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import styles from "./forgot-password.module.css";
 import { submitForgotPasswordForm } from "@/actions/authActions";
+import ErrorCard from "@/utils/components/ErrorCard/ErrorCard";
 
 const initialState: formState = {
-    error: {
-        msg: "",
-        code: -1,
-    },
+    msg: "",
+    code: -1,
     success: false,
 };
 
@@ -20,8 +19,20 @@ export default function ModalForgetPasswordPage() {
         initialState
     );
 
+    const router = useRouter();
+    useEffect(() => {
+        if (state.success) {
+            const timer = setTimeout(() => {
+                router.push("/login");
+            }, 5000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [state.success, router]);
+
     return (
         <div className={styles.modalPage}>
+            <ErrorCard state={state} />
             <div className={styles.modal}>
                 <h2>Forgot Your Password?</h2>
                 <Form action={formAction} className={styles.form}>

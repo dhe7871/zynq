@@ -4,6 +4,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    /*necessary for ErrorCard*/
+    position: relative;
 }
 
 .modal {

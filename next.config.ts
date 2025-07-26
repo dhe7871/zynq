@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
             },
         ],
     },
+    allowedDevOrigins: ["http://10.105.53.103:3000"],
 };
 
 const withPWA = nextPwa({
@@ -25,3 +26,4 @@ const withPWA = nextPwa({
 });
 
 export default isDevEnv ? nextConfig : withPWA(nextConfig);
+
