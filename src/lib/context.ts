@@ -5,6 +5,7 @@ export const defaultAppState: AppState = {
     isDarkTheme: true,
     isChatRoomVisibleSM: false,
     user: null,
+    token: null,
     contacts: [],
 };
 export type AppContextValue = [
