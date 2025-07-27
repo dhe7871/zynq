@@ -24,7 +24,7 @@ export async function submitSignupForm(
         cookieStore.set("token", token, {
             httpOnly: true,
             path: "/",
-            secure: false && process.env.NODE_ENV === "production",
+            secure: process.env.NODE_ENV === "production",
             sameSite: "none", // or "strict"/"none"
             maxAge: 7 * 24 * 60 * 60, // in seconds (7 days)
         });
@@ -74,7 +74,7 @@ export const submitLoginForm = async (
         cookieStore.set("token", token, {
             httpOnly: true,
             path: "/",
-            secure: false && process.env.NODE_ENV === "production",
+            secure: process.env.NODE_ENV === "production",
             sameSite: "none", // or "strict"/"none"
             maxAge: 7 * 24 * 60 * 60, // in seconds (7 days)
         });
