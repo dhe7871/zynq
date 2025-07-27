@@ -2,9 +2,9 @@
 import { useEffect } from "react";
 import { getSocket } from "@/lib/socket";
 
-export default function SocketClient() {
+export default function SocketClient({token}: {token: string}) {
     useEffect(() => {
-        const socket = getSocket();
+        const socket = getSocket(token);
 
         socket.on("connect", () => {
             console.log("Socket connected: ", socket.id);
@@ -14,10 +14,10 @@ export default function SocketClient() {
             console.log("Socket disconnected: ", socket.id);
         });
 
-        // return () => {
-        //     socket.disconnect();
-        // };
-    }, []);
+        return () => {
+            socket.disconnect();
+        };
+    }, [token]);
 
     return null;
 }

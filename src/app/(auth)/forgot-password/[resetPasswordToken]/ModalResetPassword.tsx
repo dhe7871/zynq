@@ -45,7 +45,7 @@ export default function ModalResetPasswordPage({
             <ErrorCard state={state}>
                 {state.success ? (
                     <p>
-                        Now you will be redirected to{" "}
+                        {state.msg}, Now you will be redirected to{" "}
                         <Link href="/login">
                             <u>
                                 <i>login page</i>

@@ -23,24 +23,24 @@ export default function ModalLoginPage() {
     );
     const router = useRouter();
 
-    const [_, setAppState] = useAppContext();
+    // const [_, setAppState] = useAppContext();
 
     useEffect(() => {
         if (state.success) {
-            setAppState((prev) =>{
-                return {...prev, user: state.payload?.user}
-            })
+            // setAppState((prev) =>{
+            //     return {...prev, user: state.payload?.user}
+            // })
 
             // dispatch({
             //     type: "SET_USER",
             //     payload: { user: state.payload?.user },
             // });
 
-            console.log(state.payload?.user);
+            // console.log(state.payload?.user);
 
             router.push("/home");
         }
-    }, [state.success, state.payload, router, setAppState]);
+    }, [state.success, router]);
 
     return (
         <div className={styles.modalPage}>

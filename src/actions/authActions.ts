@@ -17,21 +17,22 @@ export async function submitSignupForm(
             `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/signup`,
             { name, username, email, password }
         );
-        const { msg, token } = response.data;
+        const { msg } = response.data;
         console.log(msg);
 
-        const cookieStore = await cookies();
-        cookieStore.set("token", token, {
-            httpOnly: true,
-            path: "/",
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "none", // or "strict"/"none"
-            maxAge: 7 * 24 * 60 * 60, // in seconds (7 days)
-        });
+        // const cookieStore = await cookies();
+        // cookieStore.set("token", token, {
+        //     httpOnly: true,
+        //     path: "/",
+        //     secure: process.env.NODE_ENV === "production",
+        //     sameSite: "none", // or "strict"/"none"
+        //     maxAge: 7 * 24 * 60 * 60, // in seconds (7 days)
+        // });
 
         console.log(prevState);
         return {
             ...prevState,
+            code: response.status,
             msg: "Hurray! You Signed up successfully...",
             success: true,
         };
@@ -67,7 +68,7 @@ export const submitLoginForm = async (
             { usEmail, password }
         );
 
-        const { token, user } = response.data;
+        const { token } = response.data;
         console.log(response.data);
 
         const cookieStore = await cookies();
@@ -75,13 +76,14 @@ export const submitLoginForm = async (
             httpOnly: true,
             path: "/",
             secure: process.env.NODE_ENV === "production",
-            sameSite: "none", // or "strict"/"none"
+            sameSite: "strict", // or "strict"/"none"
             maxAge: 7 * 24 * 60 * 60, // in seconds (7 days)
         });
 
         return {
             ...prevState,
-            payload: {user},
+            // payload: {user},
+            // token: token,
             msg: "Logged in successfully...",
             code: response.status,
             success: true,

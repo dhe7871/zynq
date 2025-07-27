@@ -2,7 +2,7 @@
 import Form from "next/form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 
 import styles from "./signup.module.css";
 import PasswordDiv from "@/utils/components/PasswordDiv/PasswordDiv";
@@ -21,17 +21,40 @@ export default function ModalSignupPage() {
         initialState
     );
 
+    const [timeTillRedirect, setTimeTillRedirect] = useState(5);
     const router = useRouter();
 
     useEffect(() => {
-        if (state.success) {
-            router.push("/home");
+        if (state.success && timeTillRedirect > 0) {
+            const timer = setTimeout(() => {
+                setTimeTillRedirect((prev) => prev - 1);
+            }, 1000);
+
+            return () => clearTimeout(timer);
         }
-    }, [state.success, router]);
+
+        if (timeTillRedirect === 0) {
+            router.push("/login");
+        }
+    }, [timeTillRedirect, state.success, router]);
 
     return (
         <div className={styles.modalPage}>
-            <ErrorCard state={state} />
+            <ErrorCard state={state}>
+                {state.success ? (
+                    <p>
+                       {state.msg}, Now you will be redirected to{" "}
+                        <Link href="/login">
+                            <u>
+                                <i>login page</i>
+                            </u>
+                        </Link>{" "}
+                        in <b>{timeTillRedirect}s</b>.
+                    </p>
+                ) : (
+                    ""
+                )}
+            </ErrorCard>
             <div className={styles.modal}>
                 <h2>Sign up to Zynq</h2>
                 <Form action={formAction} className={styles.form}>

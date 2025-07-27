@@ -25,6 +25,7 @@ declare global {
         isDarkTheme: boolean;
         isChatRoomVisibleSM: boolean;
         user: User | null;
+        token: string | null;
         contacts: User[];
     };
 
@@ -38,14 +39,15 @@ declare global {
         code: number;
         success: boolean;
         resetPasswordToken?: string;
-        payload?: {
-            user?: {
-                userId: string;
-                name: string;
-                username: string;
-                email: string;
-            };
-        };
+        // payload?: {
+        //     user: {
+        //         userId: string;
+        //         name: string;
+        //         username: string;
+        //         email: string;
+        //     };
+        //     token: string;
+        // };
     };
 
     interface CustomJwtSessionClaims {

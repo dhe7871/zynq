@@ -1,4 +1,4 @@
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { getUser } from "@/actions/getUser";
 import AppInitializer from "@/utils/AppInitializer";
 import SocketClient from "@/lib/SocketClient";
@@ -17,14 +17,17 @@ export default async function HomeLayout({
     const userId = headersList.get("x-user-id")!;
     const user = await getUser(userId);
 
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")!.value;
+
     if (!user) {
         redirect("/login");
     }
 
     return (
         <>
-            <SocketClient />
-            <AppInitializer user={user} />
+            <SocketClient token={token}/>
+            <AppInitializer user={user} token={token} />
 
             {/*Div for Small Screens */}
             <div className="small-scr">

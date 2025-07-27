@@ -3,14 +3,14 @@ import { useAppContext } from "@/lib/context";
 import { useEffect } from "react";
 import { getSocket } from "@/lib/socket";
 
-export default function AppInitializer({ user }: { user: User }) {
+export default function AppInitializer({ user, token }: { user: User, token: string }) {
     const [_, setAppState] = useAppContext();
 
     useEffect(() => {
         setAppState((prev) => {
-            return { ...prev, user };
+            return { ...prev, user, token };
         });
-    }, [user, setAppState]);
+    }, [user, token, setAppState]);
 
     useEffect(()=>{
         const socket = getSocket();
