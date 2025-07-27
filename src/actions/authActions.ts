@@ -87,8 +87,10 @@ export const submitLoginForm = async (
             success: true,
         };
     } catch (error) {
+        console.log(error);
         if (axios.isAxiosError(error)) {
-            console.error("Error message: ", error.response?.data);
+            // console.log("Error message: ", error.response?.data);
+            console.log("Error message: ", error);
             return {
                 ...prevState,
                 code: error.response?.status || 500,
